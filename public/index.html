@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>websocket</title>
+    <style>
+      .user-pointer {
+        position: fixed;
+        transition: all 0.25s;
+      }
+      .user-pointer::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        background-color: black;
+        position: absolute;
+        left: -10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>chat</h1>
+    <div class="messages"></div>
+
+    <form>
+      <input placeholder="message" type="text" id="input-message" />
+      <button type="submit">Envoi</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>
