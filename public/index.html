@@ -1,35 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>websocket</title>
-    <style>
-      .user-pointer {
-        position: fixed;
-        transition: all 0.25s;
-      }
-      .user-pointer::before {
-        content: '';
-        width: 5px;
-        height: 5px;
-        background-color: black;
-        position: absolute;
-        left: -10px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>chat</h1>
-    <div class="messages"></div>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/index.css" />
+        <title>Webchat</title>
+    </head>
+    <body>
+        <div class="root">
+            <h1>Webchat</h1>
+            <section class="container-messages">
+                <div class="messages"></div>
+            </section>
 
-    <form>
-      <input placeholder="message" type="text" id="input-message" />
-      <button type="submit">Envoi</button>
-    </form>
+            <form class="form-message">
+                <input
+                    placeholder="message..."
+                    type="text"
+                    id="input-message"
+                />
+                <button class="btn-message" type="submit">
+                    <img
+                        class="btn-message-img"
+                        src="/img/envoi.png"
+                        alt="boutton envoyer"
+                    />
+                </button>
+            </form>
+        </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-    <script src="/js/app.js"></script>
-  </body>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+        <script src="/js/app.js"></script>
+    </body>
 </html>

@@ -1,85 +1,99 @@
 // on se connecte au serveur
 const socket = io();
 
-// on récupère le formulaire et l'input text utilisés pour l'envoi de messages
-const form = document.querySelector('form');
-const input = document.querySelector('input');
+const form = document.querySelector("form");
+const input = document.querySelector("input");
 
-// on demande son peudo à l'utilisateur
-const nickname = prompt('Quel est ton pseudo ?');
+const nickname = prompt("Quel est ton pseudo ?");
+// const nickname = "Matt";
 
 // on envoie le pseudo au serveur
-socket.emit('client-nickname', nickname);
+socket.emit("client-nickname", nickname);
 
-// on écoute les déplacements de la souris
 window.addEventListener(
-  'mousemove',
-  _.throttle(onMouseMove, 250, { leading: true, trailing: true })
+    "mousemove",
+    // onMouseMove
+    _.throttle(onMouseMove, 250, { leading: true, trailing: true })
 );
 
-// quand le formulaire est soumis
-form.addEventListener('submit', function (event) {
-  // on empèche le fonctionnement normal de l'évènement
-  event.preventDefault();
-  // si l'utilisateur a bien entré un message
-  if (input.value) {
-    // on envoie le message au serveur
-    socket.emit('client-message', input.value);
-    // on vide l'input
-    input.value = '';
-  }
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if (input.value) {
+        // on envoie le message au serveur
+        socket.emit("client-message", input.value);
+        input.value = "";
+    }
 });
 
 // quand on reçoit l'historique des messages
-socket.on('history', (history) => {
-  // on boucle sur le contenu d'history
-  history.forEach((msg) => {
-    // on ajoute au chat chaque message de l'historique
-    addMessage(msg);
-  });
+socket.on("history", (history) => {
+    history.forEach((msg) => {
+        addMessage(msg);
+    });
 });
 
 // quand on reçoit un message du serveur
-socket.on('server-message', (msg) => {
-  // on ajoute le message reçu au DOM
-  addMessage(msg);
+socket.on("server-message", (msg) => {
+    addMessage(msg);
 });
 
-socket.on('server-mousemove', (mouseObj) => {
-  const pointer = getUserPointer(mouseObj);
-  pointer.style.left = mouseObj.x + 'px';
-  pointer.style.top = mouseObj.y + 'px';
+socket.on("server-mousemove", (mouseObj) => {
+    const pointer = getUserPointer(mouseObj);
+    pointer.style.left = mouseObj.x + "px";
+    pointer.style.top = mouseObj.y + "px";
 });
 
 // quand la souris se déplace
 function onMouseMove(event) {
-  // console.log(`xpos: ${event.clientX}, ypos: ${event.clientY}`);
-  // on envoie la position de la souris au serveur
-  socket.emit('client-mousemove', { x: event.clientX, y: event.clientY });
+    socket.emit("client-mousemove", { x: event.clientX, y: event.clientY });
 }
 
 function getUserPointer(mouseObj) {
-  let pointer = document.querySelector(
-    `.user-pointer[data-id="${mouseObj.socketId}"]`
-  );
-  if (!pointer) {
-    pointer = createPointer(mouseObj.nickname, mouseObj.socketId);
-    document.body.append(pointer);
-  }
-  return pointer;
+    let pointer = document.querySelector(
+        `.user-pointer[data-id="${mouseObj.socketId}"]`
+    );
+    if (!pointer) {
+        pointer = createPointer(mouseObj.nickname, mouseObj.socketId);
+        document.body.append(pointer);
+    }
+    return pointer;
 }
 
 function createPointer(nickname, socketId) {
-  const pointer = document.createElement('div');
-  pointer.classList.add('user-pointer');
-  pointer.setAttribute('data-id', socketId);
-  pointer.textContent = nickname;
-  return pointer;
+    const pointer = document.createElement("div");
+
+    pointer.classList.add("user-pointer");
+    pointer.setAttribute("data-id", socketId);
+    pointer.textContent = nickname;
+    pointer.style.color = "wheat";
+
+    return pointer;
 }
 
 function addMessage(msg) {
-  const messageContainer = document.querySelector('.messages');
-  const myMessage = document.createElement('div');
-  myMessage.textContent = `${msg.nickname}: ${msg.message}`;
-  messageContainer.append(myMessage);
+    const messageContainer = document.querySelector(".messages");
+    const containerMyMessage = document.createElement("div");
+    const myNickname = document.createElement("p");
+    const myMessage = document.createElement("p");
+    const dateMessage = document.createElement("span");
+
+    containerMyMessage.classList.add("container-one-message");
+    myNickname.classList.add("nickname");
+    myMessage.classList.add("message");
+
+    if (socket.id !== msg.socketId) {
+        containerMyMessage.classList.add("user-message");
+    }
+
+    myNickname.textContent = msg.nickname;
+    myMessage.textContent = msg.message;
+    dateMessage.textContent = new Date().toLocaleDateString("fr");
+
+    containerMyMessage.append(myNickname, myMessage);
+    myNickname.append(dateMessage);
+    messageContainer.append(containerMyMessage);
+
+    element = document.querySelector(".messages");
+    element.scrollTop = element.scrollHeight;
 }

@@ -1,0 +1,132 @@
+*,
+::before,
+::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #33363b;
+}
+
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    color: #f1f1f1;
+}
+
+h1 {
+    font-size: 2.4rem;
+    margin-top: 10px;
+}
+
+.container-messages {
+    background-color: #222;
+    width: 50%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    position: fixed;
+    bottom: 100px;
+    top: 60px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+    border: 1px solid #f0f0f08a;
+}
+
+.messages {
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-one-message {
+    font-size: 1.3rem;
+    background-color: #454d64;
+    margin: 5px 0;
+    border-radius: 4px;
+    padding: 10px;
+    width: 80%;
+    box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.user-message {
+    background-color: #6c799e;
+    align-content: end;
+    align-self: flex-end;
+}
+
+.nickname {
+    font-style: italic;
+    font-size: 1rem;
+    font-weight: bold;
+    opacity: 0.7;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-message {
+    position: fixed;
+    bottom: 2rem;
+    height: 3rem;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+#input-message {
+    background-color: rgb(44, 44, 126);
+    width: 100%;
+    height: 3rem;
+    border: 1px solid #000;
+    font-size: 1rem;
+    border-radius: 6px 0 0 6px;
+    padding: 0 8px;
+    color: #f1f1f1;
+}
+
+#input-message::placeholder {
+    color: #fff;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.btn-message {
+    background-color: #fafafa;
+    border: 1px solid #000;
+    border-radius: 0 6px 6px 0;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-message:hover {
+    transform: scale(0.97);
+    background-color: #eaeaea;
+}
+
+.btn-message-img {
+    width: 50%;
+    height: 70%;
+}
+
+.user-pointer {
+    position: fixed;
+    transition: all 0.25s;
+}
+.user-pointer::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background-color: wheat;
+    position: absolute;
+    left: -10px;
+}
