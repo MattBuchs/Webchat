@@ -82,8 +82,8 @@ function addMessage(msg) {
     myNickname.classList.add("nickname");
     myMessage.classList.add("message");
 
-    if (socket.id !== msg.socketId) {
-        containerMyMessage.classList.add("user-message");
+    if (socket.id === msg.socketId) {
+        containerMyMessage.classList.add("my-message");
     }
 
     myNickname.textContent = msg.nickname;
